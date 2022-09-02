@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useContext } from "react";
+import React, { } from "react";
 import { Link } from "react-router-dom";
 
 // Functions
 import { shorten, isInCart, quantityCount } from "../../helper/functions";
 
-// Context
-import { CartContext } from "../../context/CartContextProvider";
+// 
 
 // Style
 import styles from "./Product.module.css";
@@ -15,7 +14,6 @@ import styles from "./Product.module.css";
 import trashIcon from "../../assets/icons/trash.svg";
 
 const Product = ({ productData }) => {
-    const { state, dispatch } = useContext(CartContext);
     return (
         <div className={styles.container}>
             <img
@@ -28,7 +26,7 @@ const Product = ({ productData }) => {
             <div className={styles.linkContainer}>
                 <Link to={`/products/${productData.id}`}>Details</Link>
                 <div className={styles.buttonContainer}>
-                    {quantityCount(state, productData.id) > 1 && (
+                    {/* {quantityCount(state, productData.id) > 1 && (
                         <button
                             className={styles.smallButton}
                             onClick={() =>
@@ -83,7 +81,7 @@ const Product = ({ productData }) => {
                         >
                             Add to Cart
                         </button>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>
