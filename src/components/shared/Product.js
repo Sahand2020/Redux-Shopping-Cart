@@ -1,11 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 // Functions
 import { shorten, isInCart, quantityCount } from "../../helper/functions";
 
-// 
+// Actions
+import {
+    addItem,
+    removeItem,
+    increase,
+    decrease,
+} from "../../redux/cart/cartAction";
 
 // Style
 import styles from "./Product.module.css";
@@ -14,6 +21,9 @@ import styles from "./Product.module.css";
 import trashIcon from "../../assets/icons/trash.svg";
 
 const Product = ({ productData }) => {
+    const state = useSelector((state) => state.cartState);
+    const dispatch = useDispatch();
+
     return (
         <div className={styles.container}>
             <img
@@ -26,15 +36,10 @@ const Product = ({ productData }) => {
             <div className={styles.linkContainer}>
                 <Link to={`/products/${productData.id}`}>Details</Link>
                 <div className={styles.buttonContainer}>
-                    {/* {quantityCount(state, productData.id) > 1 && (
+                    {quantityCount(state, productData.id) > 1 && (
                         <button
                             className={styles.smallButton}
-                            onClick={() =>
-                                dispatch({
-                                    type: "DECREASE",
-                                    payload: productData,
-                                })
-                            }
+                            onClick={() => dispatch(decrease(productData))}
                         >
                             -
                         </button>
@@ -42,12 +47,7 @@ const Product = ({ productData }) => {
                     {quantityCount(state, productData.id) === 1 && (
                         <button
                             className={styles.smallButton}
-                            onClick={() =>
-                                dispatch({
-                                    type: "REMOVE_ITEM",
-                                    payload: productData,
-                                })
-                            }
+                            onClick={() => dispatch(removeItem(productData))}
                         >
                             <img src={trashIcon} alt="trash" />
                         </button>
@@ -60,28 +60,18 @@ const Product = ({ productData }) => {
                     {isInCart(state, productData.id) ? (
                         <button
                             className={styles.smallButton}
-                            onClick={() =>
-                                dispatch({
-                                    type: "INCREASE",
-                                    payload: productData,
-                                })
-                            }
+                            onClick={() => dispatch(increase(productData))}
                         >
                             +
                         </button>
                     ) : (
                         <button
                             className={styles.addAnimation}
-                            onClick={() =>
-                                dispatch({
-                                    type: "ADD_ITEM",
-                                    payload: productData,
-                                })
-                            }
+                            onClick={() => dispatch(addItem(productData))}
                         >
                             Add to Cart
                         </button>
-                    )} */}
+                    )}
                 </div>
             </div>
         </div>

@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
-
-// Context
-import { CartContext } from "../../context/CartContextProvider";
+import React from "react";
+import { useDispatch } from "react-redux";
 
 // Functions
 import { shorten } from "../../helper/functions";
@@ -12,9 +10,13 @@ import styles from "./Cart.module.css";
 // icons
 import trashIcon from "../../assets/icons/trash.svg";
 
+// Actions
+import { increase, decrease, removeItem } from "../../redux/cart/cartAction";
+
 const Cart = (props) => {
     const { image, title, price, quantity } = props.data;
-    const { dispatch } = useContext(CartContext);
+    const dispatch = useDispatch();
+
     return (
         <div className={styles.container}>
             <img className={styles.productImage} src={image} alt="product" />
@@ -27,27 +29,15 @@ const Cart = (props) => {
             </div>
             <div className={styles.buttonContainer}>
                 {quantity > 1 ? (
-                    <button
-                        onClick={() =>
-                            dispatch({ type: "DECREASE", payload: props.data })
-                        }
-                    >
+                    <button onClick={() => dispatch(decrease(props.data))}>
                         -
                     </button>
                 ) : (
-                    <button
-                        onClick={() =>
-                            dispatch({ type: "REMOVE_ITEM", payload: props.data })
-                        }
-                    >
-                        <img src={trashIcon} alt="trash"/>
+                    <button onClick={() => dispatch(removeItem(props.data))}>
+                        <img src={trashIcon} alt="trash" />
                     </button>
                 )}
-                <button
-                    onClick={() =>
-                        dispatch({ type: "INCREASE", payload: props.data })
-                    }
-                >
+                <button onClick={() => dispatch(increase(props.data))}>
                     +
                 </button>
             </div>

@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-
-// Context
-import { CartContext } from "../../context/CartContextProvider";
+import { useSelector } from "react-redux";
 
 // Style
 import styles from "./Navbar.module.css";
@@ -11,17 +9,17 @@ import styles from "./Navbar.module.css";
 import cartIcon from "../../assets/icons/shop.svg";
 
 const Navbar = () => {
-    const { state } = useContext(CartContext);
+    const state = useSelector((state) => state.cartState);
+
     return (
         <div className={styles.mainContainer}>
             <div className={styles.container}>
-                <Link to="/products" className={styles.productLink}>Products</Link>
+                <Link to="/products" className={styles.productLink}>
+                    Products
+                </Link>
                 <div className={styles.iconContainer}>
                     <Link to="/cart">
-                        <img
-                            src={cartIcon}
-                            alt="cart"
-                        />
+                        <img src={cartIcon} alt="cart" />
                     </Link>
                     <span>{state.itemsCounter}</span>
                 </div>
